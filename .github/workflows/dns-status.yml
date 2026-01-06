@@ -1,0 +1,71 @@
+name: DNS Status
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  dns-status:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GH_PAT || github.token }}
+
+      - name: Generate dns-status.json
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          DOMAIN="ae.kg"
+          NS1="ns1.kevsrv.me"
+          NS2="ns2.kevsrv.me"
+
+          mkdir -p history
+          TS="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+          dig_run () {
+            dig @"$1" "$DOMAIN" SOA +time=3 +tries=1 +norecurse +noall +answer 2>&1 || true
+          }
+
+          SOA1="$(dig_run "$NS1")"
+          SOA2="$(dig_run "$NS2")"
+
+          python3 - <<PY
+import json
+data = {
+  "domain": "$DOMAIN",
+  "generatedAt": "$TS",
+  "servers": [
+    {
+      "name": "$NS1",
+      "soaAnswer": "$SOA1"
+    },
+    {
+      "name": "$NS2",
+      "soaAnswer": "$SOA2"
+    }
+  ]
+}
+with open("history/dns-status.json", "w") as f:
+  json.dump(data, f, indent=2)
+PY
+
+      - name: Commit & push if changed
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add history/dns-status.json
+          git commit -m "chore: update DNS status [skip ci]"
+          git push
