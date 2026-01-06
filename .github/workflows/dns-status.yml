@@ -12,10 +12,10 @@ jobs:
   dns-status:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main
+      - name: Checkout master
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: master
           token: ${{ secrets.GH_PAT || github.token }}
 
       - name: Generate history/dns-status.json
