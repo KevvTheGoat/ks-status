@@ -39,34 +39,41 @@ status-website:
         Loading…
       </div>
     </section>
+
+  customFootHtml: |
     <script>
       (async () => {
         const container = document.getElementById("dns-status");
+        if (!container) return;
+
+        const url = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/history/dns-status.json";
+
         try {
-          const res = await fetch("https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/history/dns-status.json", { cache: "no-store" });
+          const res = await fetch(url, { cache: "no-store" });
           if (!res.ok) throw new Error("HTTP " + res.status);
           const data = await res.json();
 
-          const escapeHtml = (s) => (s ?? "").toString()
+          const esc = (s) => (s ?? "").toString()
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
 
-          container.innerHTML = `
-            <div><strong>Domain:</strong> ${escapeHtml(data.domain)}<br>
-            <strong>Last Updated:</strong> ${escapeHtml(data.generatedAt)}</div>
-            <hr style="border:none;border-top:1px solid rgba(0,0,0,.08);margin:.6rem 0;">
-            ${data.servers.map(s => `
-              <div style="margin:.5rem 0;">
-                <div><strong>${escapeHtml(s.name)}</strong></div>
-                <pre style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;">
-${escapeHtml(s.soaAnswer)}
-                </pre>
+          const servers = (data.servers || []).map(s => {
+            return `
+              <div style="margin:.6rem 0;">
+                <div><strong>${esc(s.name)}</strong></div>
+                <pre style="margin:.35rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;">${esc(s.soaAnswer)}</pre>
               </div>
-            `).join("")}
-          `;
+            `;
+          }).join("");
+
+          container.innerHTML =
+            `<div><strong>Domain:</strong> ${esc(data.domain)}<br><strong>Last Updated:</strong> ${esc(data.generatedAt)}</div>` +
+            `<hr style="border:none;border-top:1px solid rgba(0,0,0,.08);margin:.6rem 0;">` +
+            servers;
+
         } catch (err) {
-          container.textContent = "Failed to load DNS status: " + err.message;
+          container.textContent = "Failed to load DNS status: " + (err && err.message ? err.message : String(err));
         }
       })();
     </script>
