@@ -6,8 +6,17 @@ sites:
     url: https://www.kevsrv.me
   - name: Kevin Service Registry
     url: https://registry.kevsrv.me
+    icon: https://www.kevsrv.me/assets/images/favicon.ico
+  - name: Kevin Service Registry Backend
+    url: https://registry.kevsrv.me/api/
+    icon: https://www.kevsrv.me/assets/images/favicon.ico
+    expectedStatusCodes:
+      - 404
   - name: Kevin Service Free Hosting
     url: https://free.kevsrv.me
+  - name: Kevin Service Free Hosting Backend
+    icon: https://www.kevsrv.me/assets/images/favicon.ico
+    url: https://free.kevsrv.me/api/
 
 status-website:
   # Add your custom domain name, or remove the `cname` line if you don't have a domain
@@ -15,7 +24,7 @@ status-website:
   cname: status.kevsrv.me
   # baseUrl: /your-repo-name
   logoUrl: https://www.kevsrv.me/assets/images/logo.png
-  name: Kevin Service Status
+  name: Status
   introTitle: "Kevin Service Status"
   introMessage: This is a status page for all services under Kevin Service
   navbar:
