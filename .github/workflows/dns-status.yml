@@ -11,7 +11,6 @@ permissions:
 jobs:
   dns-status:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -19,7 +18,7 @@ jobs:
           ref: main
           token: ${{ secrets.GH_PAT || github.token }}
 
-      - name: Generate dns-status.json
+      - name: Generate history/dns-status.json
         shell: bash
         run: |
           set -euo pipefail
@@ -35,31 +34,30 @@ jobs:
             dig @"$1" "$DOMAIN" SOA +time=3 +tries=1 +norecurse +noall +answer 2>&1 || true
           }
 
-          SOA1="$(dig_run "$NS1")"
-          SOA2="$(dig_run "$NS2")"
+          export DOMAIN TS NS1 NS2
+          export SOA1="$(dig_run "$NS1")"
+          export SOA2="$(dig_run "$NS2")"
 
-          python3 - <<PY
-import json
+          python3 - <<'PY'
+import json, os
+
 data = {
-  "domain": "$DOMAIN",
-  "generatedAt": "$TS",
+  "domain": os.environ["DOMAIN"],
+  "generatedAt": os.environ["TS"],
   "servers": [
-    {
-      "name": "$NS1",
-      "soaAnswer": "$SOA1"
-    },
-    {
-      "name": "$NS2",
-      "soaAnswer": "$SOA2"
-    }
-  ]
+    {"name": os.environ["NS1"], "soaAnswer": os.environ.get("SOA1", "")},
+    {"name": os.environ["NS2"], "soaAnswer": os.environ.get("SOA2", "")},
+  ],
 }
-with open("history/dns-status.json", "w") as f:
-  json.dump(data, f, indent=2)
+
+with open("history/dns-status.json", "w", encoding="utf-8") as f:
+  json.dump(data, f, indent=2, ensure_ascii=False)
 PY
 
       - name: Commit & push if changed
+        shell: bash
         run: |
+          set -euo pipefail
           if git diff --quiet; then
             echo "No changes"
             exit 0
