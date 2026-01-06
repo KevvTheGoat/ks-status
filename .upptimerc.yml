@@ -36,7 +36,9 @@ status-website:
   customBodyHtml: |
     <div id="ks-dns-panel" style="display:none; margin: 1rem 0;">
       <h2 style="margin: 0 0 .5rem 0;">DNS Server Status</h2>
-      <div id="ks-dns-box" style="padding:.75rem; border:1px solid rgba(0,0,0,.1); border-radius:.75rem;"></div>
+      <div id="ks-dns-box" style="padding:.75rem; border:1px solid rgba(0,0,0,.1); border-radius:.75rem;">
+        Loading…
+      </div>
     </div>
 
   customHeadHtml: |
@@ -44,33 +46,39 @@ status-website:
       (async () => {
         const URL = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/assets/dns-status.json";
 
-        const panel = document.getElementById("ks-dns-panel");
-        const box = document.getElementById("ks-dns-box");
-
         function placePanel() {
+          const panel = document.getElementById("ks-dns-panel");
+          if (!panel) return false;
+
           const h1 = document.querySelector("main h1, h1");
           if (h1 && h1.parentNode) {
             h1.parentNode.insertAdjacentElement("afterend", panel);
             panel.style.display = "block";
             return true;
           }
+
           const main = document.querySelector("main");
           if (main) {
             main.insertAdjacentElement("afterbegin", panel);
             panel.style.display = "block";
             return true;
           }
+
           return false;
         }
 
+        // Wait for Upptime to finish rendering
         for (let i = 0; i < 50; i++) {
           if (placePanel()) break;
           await new Promise(r => setTimeout(r, 100));
         }
 
+        const box = document.getElementById("ks-dns-box");
+        if (!box) return;
+
         try {
           const res = await fetch(URL, { cache: "no-store" });
-          if (!res.ok) throw new Error();
+          if (!res.ok) throw new Error("HTTP " + res.status);
 
           const data = await res.json();
           const servers = data.servers || [];
@@ -79,7 +87,7 @@ status-website:
             const ok = s.soaAnswer && s.soaAnswer.trim().length > 0;
             return `
               <div style="display:flex; justify-content:space-between; align-items:center; margin:.35rem 0;">
-                <span>${s.name}</span>
+                <span>${(s.name || "").toString()}</span>
                 <span style="font-weight:600; color:${ok ? "#16a34a" : "#dc2626"};">
                   ${ok ? "Operational" : "Down"}
                 </span>
@@ -87,13 +95,8 @@ status-website:
             `;
           }).join("") || "No DNS data available";
 
-        } catch {
-          box.innerHTML = `
-            <div style="display:flex; justify-content:space-between;">
-              <span>DNS status</span>
-              <span style="color:#dc2626;font-weight:600;">Unavailable</span>
-            </div>
-          `;
+        } catch (err) {
+          box.textContent = "DNS status unavailable";
         }
       })();
     </script>
