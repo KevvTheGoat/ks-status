@@ -46,7 +46,7 @@ status-website:
         const container = document.getElementById("dns-status");
         if (!container) return;
 
-        const url = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/history/dns-status.json";
+        const url = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/assets/dns-status.json";
 
         try {
           const res = await fetch(url, { cache: "no-store" });
