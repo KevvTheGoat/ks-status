@@ -23,8 +23,8 @@ status-website:
   # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
   cname: status.kevsrv.me
   # baseUrl: /your-repo-name
-  logoUrl: https://www.kevsrv.me/assets/images/logo.png
-  name: ""
+  logoUrl: ""
+  name: "Kevin Service Status"
   introTitle: "Kevin Service Status"
   introMessage: This is a status page for all services under Kevin Service
   navbar:
@@ -99,9 +99,6 @@ status-website:
           box.textContent = "DNS status unavailable";
         }
       })();
-    </script>
-    <script>
-      document.title = "Kevin Service Status";
     </script>
 
 # Upptime also supports notifications, assigning issues, and more
