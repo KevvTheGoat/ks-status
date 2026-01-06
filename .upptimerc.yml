@@ -24,7 +24,7 @@ status-website:
   cname: status.kevsrv.me
   # baseUrl: /your-repo-name
   logoUrl: https://www.kevsrv.me/assets/images/logo.png
-  name: Status
+  name: ""
   introTitle: "Kevin Service Status"
   introMessage: This is a status page for all services under Kevin Service
   navbar:
@@ -35,10 +35,8 @@ status-website:
 
   customBodyHtml: |
     <div id="ks-dns-panel" style="display:none; margin: 1rem 0;">
-      <h2 style="margin: 0 0 .5rem 0;">DNS Status</h2>
-      <div id="ks-dns-box" style="padding: .75rem; border: 1px solid rgba(0,0,0,.1); border-radius: .75rem;">
-        Loading…
-      </div>
+      <h2 style="margin: 0 0 .5rem 0;">DNS Server Status</h2>
+      <div id="ks-dns-box" style="padding:.75rem; border:1px solid rgba(0,0,0,.1); border-radius:.75rem;"></div>
     </div>
 
   customHeadHtml: |
@@ -46,59 +44,56 @@ status-website:
       (async () => {
         const URL = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/assets/dns-status.json";
 
-        const esc = (s) => (s ?? "").toString()
-          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const panel = document.getElementById("ks-dns-panel");
+        const box = document.getElementById("ks-dns-box");
 
         function placePanel() {
-          const panel = document.getElementById("ks-dns-panel");
-          if (!panel) return false;
-
-          // Try to place right under the main H1 title
           const h1 = document.querySelector("main h1, h1");
           if (h1 && h1.parentNode) {
             h1.parentNode.insertAdjacentElement("afterend", panel);
             panel.style.display = "block";
             return true;
           }
-
-          // Fallback: place at top of main content
           const main = document.querySelector("main");
           if (main) {
             main.insertAdjacentElement("afterbegin", panel);
             panel.style.display = "block";
             return true;
           }
-
           return false;
         }
 
-        // Wait until the page actually renders (Upptime is client-rendered)
         for (let i = 0; i < 50; i++) {
           if (placePanel()) break;
           await new Promise(r => setTimeout(r, 100));
         }
 
-        const box = document.getElementById("ks-dns-box");
-        if (!box) return;
-
         try {
           const res = await fetch(URL, { cache: "no-store" });
-          if (!res.ok) throw new Error("HTTP " + res.status);
+          if (!res.ok) throw new Error();
+
           const data = await res.json();
+          const servers = data.servers || [];
 
-          const servers = (data.servers || []).map(s => `
-            <div style="margin:.6rem 0;">
-              <div><strong>${esc(s.name)}</strong></div>
-              <pre style="margin:.35rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;">${esc(s.soaAnswer || "")}</pre>
+          box.innerHTML = servers.map(s => {
+            const ok = s.soaAnswer && s.soaAnswer.trim().length > 0;
+            return `
+              <div style="display:flex; justify-content:space-between; align-items:center; margin:.35rem 0;">
+                <span>${s.name}</span>
+                <span style="font-weight:600; color:${ok ? "#16a34a" : "#dc2626"};">
+                  ${ok ? "Operational" : "Down"}
+                </span>
+              </div>
+            `;
+          }).join("") || "No DNS data available";
+
+        } catch {
+          box.innerHTML = `
+            <div style="display:flex; justify-content:space-between;">
+              <span>DNS status</span>
+              <span style="color:#dc2626;font-weight:600;">Unavailable</span>
             </div>
-          `).join("");
-
-          box.innerHTML =
-            `<div><strong>Domain:</strong> ${esc(data.domain)}<br><strong>Last Updated:</strong> ${esc(data.generatedAt)}</div>` +
-            `<hr style="border:none;border-top:1px solid rgba(0,0,0,.08);margin:.6rem 0;">` +
-            (servers || "<div>No server data</div>");
-        } catch (e) {
-          box.textContent = "Failed to load DNS status: " + (e && e.message ? e.message : String(e));
+          `;
         }
       })();
     </script>
