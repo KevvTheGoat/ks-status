@@ -37,7 +37,7 @@ jobs:
           SOA1="$(dig_run "$NS1")"
           SOA2="$(dig_run "$NS2")"
 
-          python3 -c 'import json,sys; domain,ts,ns1,ns2,soa1,soa2=sys.argv[1:]; data={"domain":domain,"generatedAt":ts,"servers":[{"name":ns1,"soaAnswer":soa1},{"name":ns2,"soaAnswer":soa2}]}; json.dump(data, open("history/dns-status.json","w",encoding="utf-8"), indent=2, ensure_ascii=False)' \
+          python3 -c 'import json,sys; domain,ts,ns1,ns2,soa1,soa2=sys.argv[1:]; data={"domain":domain,"generatedAt":ts,"servers":[{"name":ns1,"soaAnswer":soa1},{"name":ns2,"soaAnswer":soa2}]}; json.dump(data, open("assets/dns-status.json","w",encoding="utf-8"), indent=2, ensure_ascii=False)' \
             "$DOMAIN" "$TS" "$NS1" "$NS2" "$SOA1" "$SOA2"
 
       - name: Commit & push if changed
