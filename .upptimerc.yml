@@ -100,7 +100,9 @@ status-website:
         }
       })();
     </script>
-    <title>Kevin Service Status</title>
+    <script>
+      document.title = "Kevin Service Status";
+    </script>
 
 # Upptime also supports notifications, assigning issues, and more
 # See https://upptime.js.org/docs/configuration
