@@ -23,7 +23,7 @@ status-website:
   # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
   cname: status.kevsrv.me
   # baseUrl: /your-repo-name
-  logoUrl: ""
+  logoUrl: "https://www.kevsrv.me/assets/images/logo.png"
   name: "Kevin Service Status"
   introTitle: "Kevin Service Status"
   introMessage: This is a status page for all services under Kevin Service
