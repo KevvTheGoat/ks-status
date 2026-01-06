@@ -18,7 +18,7 @@ jobs:
           ref: master
           token: ${{ secrets.GH_PAT || github.token }}
 
-      - name: Generate history/dns-status.json
+      - name: Generate assets/dns-status.json
         shell: bash
         run: |
           set -euo pipefail
@@ -28,7 +28,7 @@ jobs:
           NS2="ns2.kevsrv.me"
           TS="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-          mkdir -p history
+          mkdir -p assets
 
           dig_run () {
             dig @"$1" "$DOMAIN" SOA +time=3 +tries=1 +norecurse +noall +answer 2>&1 || true
@@ -50,6 +50,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add history/dns-status.json
+          git add assets/dns-status.json
           git commit -m "chore: update DNS status [skip ci]"
           git push
