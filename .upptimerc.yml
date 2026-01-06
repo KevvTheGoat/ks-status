@@ -32,48 +32,73 @@ status-website:
       href: https://kevsrv.me
     - title: Status
       href: /
+
   customBodyHtml: |
-    <section style="margin: 1rem 0;">
+    <div id="ks-dns-panel" style="display:none; margin: 1rem 0;">
       <h2 style="margin: 0 0 .5rem 0;">DNS Status</h2>
-      <div id="dns-status" style="padding: .75rem; border: 1px solid rgba(0,0,0,.1); border-radius: .75rem;">
+      <div id="ks-dns-box" style="padding: .75rem; border: 1px solid rgba(0,0,0,.1); border-radius: .75rem;">
         Loading…
       </div>
-    </section>
+    </div>
 
-  customFootHtml: |
-    <script>
+  customHeadHtml: |
+    <script defer>
       (async () => {
-        const container = document.getElementById("dns-status");
-        if (!container) return;
+        const URL = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/assets/dns-status.json";
 
-        const url = "https://raw.githubusercontent.com/kevvTheGoat/ks-status/master/assets/dns-status.json";
+        const esc = (s) => (s ?? "").toString()
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        function placePanel() {
+          const panel = document.getElementById("ks-dns-panel");
+          if (!panel) return false;
+
+          // Try to place right under the main H1 title
+          const h1 = document.querySelector("main h1, h1");
+          if (h1 && h1.parentNode) {
+            h1.parentNode.insertAdjacentElement("afterend", panel);
+            panel.style.display = "block";
+            return true;
+          }
+
+          // Fallback: place at top of main content
+          const main = document.querySelector("main");
+          if (main) {
+            main.insertAdjacentElement("afterbegin", panel);
+            panel.style.display = "block";
+            return true;
+          }
+
+          return false;
+        }
+
+        // Wait until the page actually renders (Upptime is client-rendered)
+        for (let i = 0; i < 50; i++) {
+          if (placePanel()) break;
+          await new Promise(r => setTimeout(r, 100));
+        }
+
+        const box = document.getElementById("ks-dns-box");
+        if (!box) return;
 
         try {
-          const res = await fetch(url, { cache: "no-store" });
+          const res = await fetch(URL, { cache: "no-store" });
           if (!res.ok) throw new Error("HTTP " + res.status);
           const data = await res.json();
 
-          const esc = (s) => (s ?? "").toString()
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
+          const servers = (data.servers || []).map(s => `
+            <div style="margin:.6rem 0;">
+              <div><strong>${esc(s.name)}</strong></div>
+              <pre style="margin:.35rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;">${esc(s.soaAnswer || "")}</pre>
+            </div>
+          `).join("");
 
-          const servers = (data.servers || []).map(s => {
-            return `
-              <div style="margin:.6rem 0;">
-                <div><strong>${esc(s.name)}</strong></div>
-                <pre style="margin:.35rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;">${esc(s.soaAnswer)}</pre>
-              </div>
-            `;
-          }).join("");
-
-          container.innerHTML =
+          box.innerHTML =
             `<div><strong>Domain:</strong> ${esc(data.domain)}<br><strong>Last Updated:</strong> ${esc(data.generatedAt)}</div>` +
             `<hr style="border:none;border-top:1px solid rgba(0,0,0,.08);margin:.6rem 0;">` +
-            servers;
-
-        } catch (err) {
-          container.textContent = "Failed to load DNS status: " + (err && err.message ? err.message : String(err));
+            (servers || "<div>No server data</div>");
+        } catch (e) {
+          box.textContent = "Failed to load DNS status: " + (e && e.message ? e.message : String(e));
         }
       })();
     </script>
