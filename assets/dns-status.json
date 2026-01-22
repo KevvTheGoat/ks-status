@@ -1,10 +1,10 @@
 {
   "domain": "ae.kg",
-  "generatedAt": "2026-01-22T19:43:18Z",
+  "generatedAt": "2026-01-22T19:57:10Z",
   "servers": [
     {
       "name": "ns1.kevsrv.me",
-      "soaAnswer": "ae.kg.\t\t\t3600\tIN\tSOA\tns1.kevsrv.me. cs.kevsrv.me. 2026012207 3600 3600 1209600 3600"
+      "soaAnswer": ";; communications error to 51.81.222.236#53: timed out\n;; UDP setup with 2604:2dc0:202:300::1107#53(2604:2dc0:202:300::1107) for ae.kg failed: network unreachable.\n;; no servers could be reached"
     },
     {
       "name": "ns2.kevsrv.me",
