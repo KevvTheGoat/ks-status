@@ -22,45 +22,49 @@
     "url": "https://registry.kevsrv.me",
     "icon": "https://www.kevsrv.me/assets/images/favicon.ico",
     "slug": "kevin-service-registry",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
+    "uptimeDay": "99.90%",
+    "uptimeWeek": "99.99%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 339,
-    "timeDay": 367,
-    "timeWeek": 296,
-    "timeMonth": 375,
-    "timeYear": 339,
-    "dailyMinutesDown": {}
+    "time": 513,
+    "timeDay": 5297,
+    "timeWeek": 1538,
+    "timeMonth": 693,
+    "timeYear": 513,
+    "dailyMinutesDown": {
+      "2026-02-20": 1
+    }
   },
   {
     "name": "Kevin Service Registry Backend",
     "url": "https://registry.kevsrv.me/api/",
     "icon": "https://www.kevsrv.me/assets/images/favicon.ico",
     "slug": "kevin-service-registry-backend",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
+    "uptimeDay": "99.90%",
+    "uptimeWeek": "99.99%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
     "time": 87,
-    "timeDay": 188,
+    "timeDay": 144,
     "timeWeek": 102,
     "timeMonth": 89,
     "timeYear": 87,
-    "dailyMinutesDown": {}
+    "dailyMinutesDown": {
+      "2026-02-20": 1
+    }
   },
   {
     "name": "Kevin Service Free Hosting",
     "url": "https://free.kevsrv.me",
     "icon": "https://icons.duckduckgo.com/ip3/free.kevsrv.me.ico",
     "slug": "kevin-service-free-hosting",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
-    "uptimeDay": "100.00%",
+    "uptimeDay": "99.97%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
@@ -69,24 +73,28 @@
     "timeWeek": 312,
     "timeMonth": 255,
     "timeYear": 276,
-    "dailyMinutesDown": {}
+    "dailyMinutesDown": {
+      "2026-02-20": 0
+    }
   },
   {
     "name": "Kevin Service Free Hosting Backend",
     "url": "https://free.kevsrv.me/api/",
     "icon": "https://www.kevsrv.me/assets/images/favicon.ico",
     "slug": "kevin-service-free-hosting-backend",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
     "uptimeDay": "100.00%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 78,
-    "timeDay": 187,
-    "timeWeek": 97,
-    "timeMonth": 71,
-    "timeYear": 78,
-    "dailyMinutesDown": {}
+    "time": 455,
+    "timeDay": 10504,
+    "timeWeek": 2688,
+    "timeMonth": 741,
+    "timeYear": 455,
+    "dailyMinutesDown": {
+      "2026-02-20": 0
+    }
   }
 ]
