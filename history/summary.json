@@ -24,8 +24,8 @@
     "slug": "kevin-service-registry",
     "status": "up",
     "uptime": "99.94%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
+    "uptimeDay": "99.95%",
+    "uptimeWeek": "99.99%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "99.94%",
     "time": 326,
@@ -35,7 +35,8 @@
     "timeYear": 326,
     "dailyMinutesDown": {
       "2026-02-20": 60,
-      "2026-04-30": 92
+      "2026-04-30": 92,
+      "2026-06-28": 1
     }
   },
   {
@@ -43,19 +44,20 @@
     "url": "https://registry.kevsrv.me/api/",
     "icon": "https://www.kevsrv.me/assets/images/favicon.ico",
     "slug": "kevin-service-registry-backend",
-    "status": "up",
+    "status": "down",
     "uptime": "99.98%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
+    "uptimeDay": "99.96%",
+    "uptimeWeek": "99.99%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "99.98%",
-    "time": 127,
-    "timeDay": 70,
-    "timeWeek": 159,
-    "timeMonth": 190,
-    "timeYear": 127,
+    "time": 126,
+    "timeDay": 50,
+    "timeWeek": 142,
+    "timeMonth": 185,
+    "timeYear": 126,
     "dailyMinutesDown": {
-      "2026-02-20": 60
+      "2026-02-20": 60,
+      "2026-06-28": 1
     }
   },
   {
@@ -63,17 +65,17 @@
     "url": "https://free.kevsrv.me",
     "icon": "https://icons.duckduckgo.com/ip3/free.kevsrv.me.ico",
     "slug": "kevin-service-free-hosting",
-    "status": "up",
-    "uptime": "87.83%",
-    "uptimeDay": "100.00%",
+    "status": "down",
+    "uptime": "87.89%",
+    "uptimeDay": "99.98%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
-    "uptimeYear": "87.83%",
-    "time": 248,
-    "timeDay": 120,
-    "timeWeek": 217,
-    "timeMonth": 222,
-    "timeYear": 248,
+    "uptimeYear": "87.89%",
+    "time": 247,
+    "timeDay": 81,
+    "timeWeek": 195,
+    "timeMonth": 216,
+    "timeYear": 247,
     "dailyMinutesDown": {
       "2026-02-20": 59,
       "2026-04-30": 1012,
@@ -97,7 +99,8 @@
       "2026-04-12": 1440,
       "2026-04-11": 1440,
       "2026-04-10": 1440,
-      "2026-04-09": 474
+      "2026-04-09": 474,
+      "2026-06-28": 0
     }
   },
   {
@@ -105,17 +108,17 @@
     "url": "https://free.kevsrv.me/api/",
     "icon": "https://www.kevsrv.me/assets/images/favicon.ico",
     "slug": "kevin-service-free-hosting-backend",
-    "status": "up",
-    "uptime": "87.83%",
-    "uptimeDay": "100.00%",
+    "status": "down",
+    "uptime": "87.89%",
+    "uptimeDay": "99.99%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
-    "uptimeYear": "87.83%",
-    "time": 225,
-    "timeDay": 71,
-    "timeWeek": 159,
-    "timeMonth": 175,
-    "timeYear": 225,
+    "uptimeYear": "87.89%",
+    "time": 224,
+    "timeDay": 53,
+    "timeWeek": 144,
+    "timeMonth": 170,
+    "timeYear": 224,
     "dailyMinutesDown": {
       "2026-02-20": 59,
       "2026-04-30": 1012,
@@ -139,7 +142,8 @@
       "2026-04-12": 1440,
       "2026-04-11": 1440,
       "2026-04-10": 1440,
-      "2026-04-09": 472
+      "2026-04-09": 472,
+      "2026-06-28": 0
     }
   }
 ]
