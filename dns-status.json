@@ -1,14 +1,14 @@
 {
   "domain": "ae.kg",
-  "generatedAt": "2026-07-03T01:13:41Z",
+  "generatedAt": "2026-07-04T01:12:10Z",
   "servers": [
     {
       "name": "ns1.kevsrv.me",
-      "soaAnswer": "ae.kg.\t\t\t3600\tIN\tSOA\tns1.kevsrv.me. cs.kevsrv.me. 2026062104 3600 3600 1209600 3600"
+      "soaAnswer": "ae.kg.\t\t\t3600\tIN\tSOA\tns1.kevsrv.me. cs.kevsrv.me. 2026070304 3600 3600 1209600 3600"
     },
     {
       "name": "ns2.kevsrv.me",
-      "soaAnswer": "ae.kg.\t\t\t3600\tIN\tSOA\tns1.kevsrv.me. cs.kevsrv.me. 2026062104 3600 3600 1209600 3600"
+      "soaAnswer": "ae.kg.\t\t\t3600\tIN\tSOA\tns1.kevsrv.me. cs.kevsrv.me. 2026070304 3600 3600 1209600 3600"
     }
   ]
 }
