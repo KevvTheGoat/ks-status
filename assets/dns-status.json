@@ -1,6 +1,6 @@
 {
   "domain": "ae.kg",
-  "generatedAt": "2026-10-27T06:08:42Z",
+  "generatedAt": "2026-10-27T12:12:33Z",
   "servers": [
     {
       "name": "ns1.kevsrv.me",
@@ -8,7 +8,7 @@
     },
     {
       "name": "ns2.kevsrv.me",
-      "soaAnswer": "ae.kg.\t\t\t3600\tIN\tSOA\tns1.kevsrv.me. cs.kevsrv.me. 2026102604 3600 3600 1209600 3600"
+      "soaAnswer": ";; communications error to 192.18.140.124#53: timed out\n\n; <<>> DiG 9.20.24-1ubuntu0.4-Ubuntu <<>> @ns2.kevsrv.me ae.kg SOA +time=3 +tries=1 +norecurse +noall +answer\n; (1 server found)\n;; global options: +cmd\n;; no servers could be reached"
     }
   ]
 }
